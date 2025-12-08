@@ -1,19 +1,20 @@
 # Quantitative-Risk-Modeling-Project
-# Credit Risk Modeling – German Credit (PD Prototype)
+# Credit Risk Modeling (PD Model) + Monitoring Dashboard
+Self-initiated project for me to explore credit risk & model monitoring
 
 ## 1. Project Overview
 
-This project builds a simple **Probability of Default (PD)** prototype model using the classic German Credit dataset.  
-The goal is to demonstrate an end-to-end **risk modeling workflow**:
+This is a self-initiated learning project where I wanted to “taste” what credit risk modeling looks like in practice and get some intuition for how PD models, model validation, and monitoring workflows work in the real world.
 
-- Data understanding & preprocessing
-- Logistic regression–based PD modeling
-- Model evaluation (ROC, AUC, KS)
+The project covers a simple end-to-end pipeline:
+- Exploratory data understanding
+- Logistic regression–based PD modeling (a baseline Probability of Default (PD) model)
+- Model validation (calibration, segmentation, PSI)
 - PD segmentation and calibration checks
 - Simple stress testing
-- Feature interpretation
+- A small risk monitoring dashboard to track PD shifts and feature drif
 
-This project is intended as a **learning / portfolio project**, not as a production-ready credit risk model.
+It is not intended to be a production model, just my way of exploring risk analytics hands-on.
 
 ---
 
@@ -22,8 +23,8 @@ This project is intended as a **learning / portfolio project**, not as a product
 - Dataset: German Credit (UCI / Kaggle variant)
 - Number of observations: ~1,000
 - Target variable:  
-  - `Creditability` = 1 → good customer  
-  - `Creditability` = 0 → bad / defaulted customer
+  - `Creditability` = 0 → good customer  
+  - `Creditability` = 1 → bad / defaulted customer
 - Example features:
   - `Age`, `Job`, `Duration`, `Credit amount`
   - `Sex`, `Housing`, `Saving accounts`, `Checking account`
@@ -35,44 +36,42 @@ Some features are numeric, others are categorical text variables.
 
 ## 3. Methodology
 
-### 3.1 Feature preprocessing
+I experimented with two types of models:
+- Logistic Regression (baseline PD model)
+- Simple tree-based models to see how they compare
+  
+Preprocessing includes:
+- One-hot encoding for categorical variables
+- Standardization for numerical varaiables
+- sklearn Pipeline to avoid leakage and ensure reproducibility
 
-- Numeric features are passed through unchanged.
-- Categorical features are encoded using **OneHotEncoder**.
-- Preprocessing and modeling are combined into a single **sklearn Pipeline** to:
-  - avoid data leakage,
-  - ensure consistent transformations on train and test data,
-  - and make the workflow easier to reproduce and deploy.
-
-### 3.2 Model
+## 4. Model Validation
 
 - Model: **Logistic Regression**
-- Objective: predict \( P(\text{good}) \), then convert to PD via  
+- Objective: 
   \[
-  \text{PD} = 1 - P(\text{good})
+  \text{PD} = P(\text{bad
+  })
   \]
 
-Train/test split: 80% / 20%, stratified by `Creditability`.
 
 ---
 
 ## 4. Model Evaluation
 
-- Metric: **ROC AUC** on the test set  
-- ROC curve is plotted to visualize the model’s discriminatory power.
-- A simple **PD segmentation** is performed:
-  - predicted PDs are grouped into 5 buckets,
-  - for each bucket, we compare:
-    - average predicted PD vs.
-    - observed default rate.
+To get a feeling for how PD models are evaluated, I implemented:
+- ROC / AUC
+- PD segmentation (predicted PD buckets vs observed defaults)
+- Calibration checks
+- Stability check using PSI (train vs test, and over resampled scenarios)
 
-This checks whether higher predicted PD indeed corresponds to higher realized default rates.
+This helped me understand how risk teams assess model performance beyond just accuracy.
 
 ---
 
 ## 5. Stress Testing
 
-A simple scenario analysis is implemented:
+I added a tiny scenario test to see how PD reacts when conditions worsen:
 
 - **Scenario**: increase `Credit amount` by +20% for all test customers  
 - Recalculate PDs under the stressed scenario
@@ -80,31 +79,18 @@ A simple scenario analysis is implemented:
   - baseline average PD vs.
   - stressed average PD
 
-This illustrates how the portfolio PD reacts to a deterioration in credit conditions.
+This is only a toy example, but it helped me visualize how portfolio risk can shift under stress.
 
 ---
 
-## 6. Feature Interpretation
+## 6. Monitoring Dashboard
 
-- Extract logistic regression coefficients after preprocessing.
-- Examine top features (by absolute coefficient value).
-- Interpretation:
-  - Positive coefficients → associated with higher \( P(\text{good}) \) (lower PD)
-  - Negative coefficients → associated with higher PD
+To explore model monitoring concepts, I built a small dashboard that tracks:
+- PD distribution over time
+- Feature drift
+- PSI for key variables
+- Stress-scenario impacts
 
-This helps understand which features drive credit risk in the model.
+The dashboard is meant to mimic the kind of monitoring risk teams use after model deployment.
 
----
 
-## 7. How to Run
-
-```bash
-# 1. Create and activate virtual environment (example)
-python -m venv .venv
-.\.venv\Scripts\activate
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Start Jupyter Lab
-jupyter lab
