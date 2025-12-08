@@ -45,18 +45,6 @@ Preprocessing includes:
 - Standardization for numerical varaiables
 - sklearn Pipeline to avoid leakage and ensure reproducibility
 
-## 4. Model Validation
-
-- Model: **Logistic Regression**
-- Objective: 
-  \[
-  \text{PD} = P(\text{bad
-  })
-  \]
-
-
----
-
 ## 4. Model Evaluation
 
 To get a feeling for how PD models are evaluated, I implemented:
