@@ -67,7 +67,7 @@ I added a tiny scenario test to see how PD reacts when conditions worsen:
   - baseline average PD vs.
   - stressed average PD
 
-This is only a toy example, but it helped me visualize how portfolio risk can shift under stress.
+This is only a simple example, but it helped me visualize how portfolio risk can shift under stress.
 
 ---
 
@@ -79,6 +79,6 @@ To explore model monitoring concepts, I built a small dashboard that tracks:
 - PSI for key variables
 - Stress-scenario impacts
 
-The dashboard is meant to mimic the kind of monitoring risk teams use after model deployment.
+The dashboard is meant to mimic the kind of monitoring risk teams use after model deployment. So it's maybe the daily usual work of a risk anlyst, I just want to have a little bit "taste" of that.
 
 
