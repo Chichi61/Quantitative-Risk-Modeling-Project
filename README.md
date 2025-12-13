@@ -79,6 +79,6 @@ To explore model monitoring concepts, I built a small dashboard that tracks:
 - PSI for key variables
 - Stress-scenario impacts
 
-The dashboard is meant to mimic the kind of monitoring risk teams use after model deployment. So it's maybe the daily usual work of a risk anlyst, I just want to have a little bit "taste" of that.
+The dashboard is meant to mimic the kind of monitoring risk teams use after model deployment. So this part maybe the daily usual work of a risk anlyst, I just want to have a little bit "taste" of that.
 
 
