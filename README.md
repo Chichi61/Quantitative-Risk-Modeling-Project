@@ -12,7 +12,7 @@ The project covers a simple end-to-end pipeline:
 - Model validation (calibration, segmentation, PSI)
 - PD segmentation and calibration checks
 - Simple stress testing
-- A small risk monitoring dashboard to track PD shifts and feature drif
+- Monitoring visualizations for PD distributions and selected feature stability
 
 It is not intended to be a production model, just my way of exploring risk analytics hands-on.
 
